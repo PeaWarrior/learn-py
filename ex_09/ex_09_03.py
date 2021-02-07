@@ -5,3 +5,25 @@
 
 # Enter a file name: mbox.txt
 # zqian@umich.edu 195
+
+
+try :
+  userInput = input('Enter a file name: ')
+  fileHandler = open(userInput)
+  emailCount = {}
+  maxCount = 0
+  maxEmail = None
+
+  for line in fileHandler :
+    if line.startswith('From: ') :
+      line = line.split()
+      email = line[1]
+      emailCount[email] = emailCount.get(email, 0) + 1
+
+  def callback(email) :
+    return emailCount[email]
+
+  maxEmailCount = max(emailCount, key=callback)
+  print(maxEmailCount, emailCount[maxEmailCount])
+except :
+  print("Can't find file")

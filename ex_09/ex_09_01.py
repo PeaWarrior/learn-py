@@ -8,3 +8,17 @@
 # python dow.py
 # Enter a file name: mbox-short.txt
 # {'Fri': 20, 'Thu': 6, 'Sat': 1}
+
+try :
+  userInput = input('Enter a file name: ')
+  fileHandler = open(userInput)
+  days = {}
+
+  for line in fileHandler :
+    if line.startswith('From ') :
+      day = line.split()[2]
+      days[day] = days.get(day, 0) + 1
+
+  print(days)
+except :
+  print("Can't find file")

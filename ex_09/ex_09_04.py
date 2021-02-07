@@ -4,3 +4,16 @@
 # Enter a file name: mbox-short.txt
 # {'media.berkeley.edu': 4, 'uct.ac.za': 6, 'umich.edu': 7,
 # 'gmail.com': 1, 'caret.cam.ac.uk': 1, 'iupui.edu': 8}
+
+userInput = input('Enter a file name: ')
+fileHandler = open(userInput)
+domainNames = {}
+
+for line in fileHandler :
+  if line.startswith('From ') :
+    atSymbolIndex = line.find('@')
+    endDomainIndex = line.find(' ', atSymbolIndex)
+    domainName = line[atSymbolIndex + 1 : endDomainIndex]
+    domainNames[domainName] = domainNames.get(domainName, 0) + 1
+  
+print(domainNames)
