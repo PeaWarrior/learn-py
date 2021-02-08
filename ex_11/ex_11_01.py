@@ -11,3 +11,15 @@
 # $ python grep.py
 # Enter a regular expression: java$
 # mbox.txt had 4175 lines that matched java$
+
+import re
+
+userInput = input('Enter a regular expression: ')
+fileHandle = open('../mbox-short.txt')
+count = 0
+
+for line in fileHandle:
+  if re.search(userInput, line):
+    count = count + 1
+
+print('mbox.txt had', count, 'lines that matched', userInput)

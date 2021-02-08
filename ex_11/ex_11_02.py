@@ -8,3 +8,19 @@
 
 # Enter file:mbox-short.txt
 # 39756
+
+import re
+
+userInput = input('Enter file: ')
+fileHandle = open(userInput)
+
+lines = fileHandle.read()
+revisions = re.findall('New Revision:\s([0-9]+)', lines)
+
+total = 0
+for revision in revisions:
+  total = total + int(revision)
+
+average = int(total/len(revisions))
+
+print(average)
