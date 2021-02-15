@@ -1,18 +1,23 @@
 import math
 
-rows= [
-  [' ', ' ', ' '],
-  [' ', ' ', ' '],
-  [' ', ' ', ' ']
+rows = [
+  ' ', ' ', ' ',
+  ' ', ' ', ' ',
+  ' ', ' ', ' '
 ]
+winning_combos = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [1, 4, 7], [2, 5, 8], [0, 4, 8], [2, 4, 6]]
 clear = "\n" * 100
 game_on = True
 user = 'X'
+win = False
+draw = False
 
 def display(rows):
-  print(rows[0])
-  print(rows[1])
-  print(rows[2])
+  print(f'{rows[0]}|{rows[1]}|{rows[2]}')
+  print('-----')
+  print(f'{rows[3]}|{rows[4]}|{rows[5]}')
+  print('-----')
+  print(f'{rows[6]}|{rows[7]}|{rows[8]}')
 
 def get_user_input():
   user_input = ' '
@@ -44,25 +49,49 @@ def start_game():
     return True
   else:
     return False
-  
+
 def change_slot():
   valid_input = False
 
   while valid_input == False:
     user_input = get_user_input()
-    row = math.floor(user_input / 3)
-    slot = user_input % 3
   
-    if rows[row][slot] == ' ':
-      rows[row][slot] = user
+    if rows[user_input] == ' ':
+      print(clear)
+      rows[user_input] = user
       valid_input = True
     else:
+      print(clear)
+      display(rows)
       print('Slot already taken. Choose a different slot (1 - 9).')
 
+def check_win():
+  for combo in winning_combos:
+    if user == rows[combo[0]] == rows[combo[1]] == rows[combo[2]]:
+      display(rows)
+      print(f'{user} won!')
+      return True
+  return False
+
+def check_draw():
+  for slot in rows:
+    if slot == ' ':
+      return False
+  if win != True:
+    display(rows)
+    print('Game is a draw!')
+    return True
 
 while game_on:
   display(rows)
   change_slot()
+  win = check_win()
+  draw = check_draw()
   user = 'O' if user == 'X' else 'X'
 
-  game_on = start_game()
+  if win or draw:
+    game_on = start_game()
+    print(clear)
+    if game_on:
+      user = 'X'
+      rows = [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ']
